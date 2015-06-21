@@ -6,6 +6,7 @@ import (
 	"testing"
 	"time"
 
+	_ "github.com/docker/distribution/registry/auth/silly"
 	"github.com/endophage/gotuf/signed"
 	"golang.org/x/net/context"
 
@@ -26,8 +27,15 @@ func TestRunBadCerts(t *testing.T) {
 func TestRunBadAddr(t *testing.T) {
 	config := config.ServerConf{
 		Addr:        "testAddr",
-		TLSCertFile: "../fixtures/ca.pem",
-		TLSKeyFile:  "../fixtures/ca-key.pem",
+		TLSCertFile: "../fixtures/notary.pem",
+		TLSKeyFile:  "../fixtures/notary.key",
+		Auth: config.AuthConf{
+			Method: "silly",
+			Opts: map[string]interface{}{
+				"realm":   "testrealm",
+				"service": "testservice",
+			},
+		},
 	}
 	err := Run(context.Background(), config, signed.NewEd25519())
 	if err == nil {
@@ -42,6 +50,13 @@ func TestRunReservedPort(t *testing.T) {
 		Addr:        "localhost:80",
 		TLSCertFile: "../fixtures/notary.pem",
 		TLSKeyFile:  "../fixtures/notary.key",
+		Auth: config.AuthConf{
+			Method: "silly",
+			Opts: map[string]interface{}{
+				"realm":   "testrealm",
+				"service": "testservice",
+			},
+		},
 	}
 
 	err := Run(ctx, config, signed.NewEd25519())
@@ -61,6 +76,13 @@ func TestRunGoodCancel(t *testing.T) {
 		Addr:        "localhost:8002",
 		TLSCertFile: "../fixtures/notary.pem",
 		TLSKeyFile:  "../fixtures/notary.key",
+		Auth: config.AuthConf{
+			Method: "silly",
+			Opts: map[string]interface{}{
+				"realm":   "testrealm",
+				"service": "testservice",
+			},
+		},
 	}
 
 	go func() {

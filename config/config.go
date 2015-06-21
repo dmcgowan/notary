@@ -18,9 +18,27 @@ type Configuration struct {
 // ServerConf specifically addresses configuration related to
 // the http server.
 type ServerConf struct {
-	Addr        string `json:"addr"`
-	TLSCertFile string `json:"tls_cert_file"`
-	TLSKeyFile  string `json:"tls_key_file"`
+	Addr        string   `json:"addr"`
+	TLSCertFile string   `json:"tls_cert_file"`
+	TLSKeyFile  string   `json:"tls_key_file"`
+	Auth        AuthConf `json:"auth"`
+}
+
+// AuthConf addresses configuration related to the authentication
+// mechanism. Current JWT token auth and htpasswd auth are supported
+// with the following opts for each:
+//
+// token:
+//     - realm: token-realm
+//     - service: token-service
+//     - issuer: registry-token-issuer
+//     - rootcertbundle: /root/certs/bundle
+// htpasswd:
+//     - realm: basic-realm
+//     - path: /path/to/htpasswd
+type AuthConf struct {
+	Method string                 `json:"method"`
+	Opts   map[string]interface{} `json:"options"`
 }
 
 // TrustServiceConf specificies the service to use for signing.

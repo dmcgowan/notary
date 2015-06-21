@@ -58,10 +58,10 @@ func (svr *HTTPServer) TimeoutConnections() {
 func Run(ctx context.Context, conf config.ServerConf, trust signed.CryptoService) error {
 
 	// TODO: check validity of config
-	return run(ctx, conf.Addr, conf.TLSCertFile, conf.TLSKeyFile, trust)
+	return run(ctx, conf.Addr, conf.TLSCertFile, conf.TLSKeyFile, trust, conf.Auth.Method, conf.Auth.Opts)
 }
 
-func run(ctx context.Context, addr, tlsCertFile, tlsKeyFile string, trust signed.CryptoService) error {
+func run(ctx context.Context, addr, tlsCertFile, tlsKeyFile string, trust signed.CryptoService, authMethod string, authOpts map[string]interface{}) error {
 
 	keypair, err := tls.LoadX509KeyPair(tlsCertFile, tlsKeyFile)
 	if err != nil {
@@ -96,11 +96,15 @@ func run(ctx context.Context, addr, tlsCertFile, tlsKeyFile string, trust signed
 	}
 	tlsLsnr := tls.NewListener(lsnr, tlsConfig)
 
-	var ac auth.AccessController = nil
-	//ac, err := auth.GetAccessController("token", map[string]interface{}{})
-	//if err != nil {
-	//	return err
-	//}
+	var ac auth.AccessController
+	if authMethod == "" {
+		ac = nil
+	} else {
+		ac, err = auth.GetAccessController(authMethod, authOpts)
+		if err != nil {
+			return err
+		}
+	}
 	hand := utils.RootHandlerFactory(ac, ctx, trust)
 
 	r := mux.NewRouter()

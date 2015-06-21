@@ -29,13 +29,18 @@
 		},
 		{
 			"ImportPath": "github.com/docker/distribution/context",
-			"Comment": "v2.0.0-rc.3-2-g75919b7",
-			"Rev": "75919b7dcc5d53894d7e8f1584e91ae148335f3a"
+			"Comment": "v2.0.0-299-gd0fda14",
+			"Rev": "d0fda14e858625e22e9bfaea4feda20bb8b60130"
 		},
 		{
 			"ImportPath": "github.com/docker/distribution/registry/auth",
-			"Comment": "v2.0.0-rc.3-2-g75919b7",
-			"Rev": "75919b7dcc5d53894d7e8f1584e91ae148335f3a"
+			"Comment": "v2.0.0-299-gd0fda14",
+			"Rev": "d0fda14e858625e22e9bfaea4feda20bb8b60130"
+		},
+		{
+			"ImportPath": "github.com/docker/distribution/uuid",
+			"Comment": "v2.0.0-299-gd0fda14",
+			"Rev": "d0fda14e858625e22e9bfaea4feda20bb8b60130"
 		},
 		{
 			"ImportPath": "github.com/docker/libtrust",
@@ -111,6 +116,14 @@
 		{
 			"ImportPath": "github.com/tent/canonical-json-go",
 			"Rev": "96e4ba3a7613a1216cbd1badca4efe382adea337"
+		},
+		{
+			"ImportPath": "golang.org/x/crypto/bcrypt",
+			"Rev": "bfc286917c5fcb7420d7e3092b50bbfd31b38a98"
+		},
+		{
+			"ImportPath": "golang.org/x/crypto/blowfish",
+			"Rev": "bfc286917c5fcb7420d7e3092b50bbfd31b38a98"
 		},
 		{
 			"ImportPath": "golang.org/x/net/context",
